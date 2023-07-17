@@ -10,7 +10,7 @@ const baseUrl = "https://mindhub-xj03.onrender.com/api/amazing";
     const addEvents = (newEvents) => { //agrega nuevos eventos al estado eventos
         setEventos([...eventos, ...newEvents]);//con spread operator se crea un nuevo array con los eventos existentes y los nuevos
     }; //setEventos actualiza el estado con el nuevo array 
-    //esto garantiza que el estado eventos existentes no se seobreescriban y que los nuevos eventos se agreguen al estado de forma acumulativa
+    //esto garantiza que el estado eventos existentes no se sobreescriban y que los nuevos eventos se agreguen al estado de forma acumulativa
 
     useEffect(() => {
         const getEventData = async () => {
