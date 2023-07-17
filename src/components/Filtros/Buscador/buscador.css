@@ -1,0 +1,11 @@
+.buscador-input{
+    width: 300px;
+}
+.search-icon{
+    position: absolute;
+    right: 40px;
+    top: 31%;
+    transform: translateY(-50%);
+    color: #777;
+    cursor: pointer;
+}
