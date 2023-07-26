@@ -1,21 +1,43 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import './navbar.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import AuthContext from '../../contextAuth/AuthContext';
+import axios from 'axios';
 
 library.add(faCalendarAlt, faSignInAlt, faSignOutAlt);
 export const Navbar = () => {
-   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
-   const navigate = useNavigate();
+   const [ isLoggedIn, setIsLoggedIn] = useState(false);
 
-   const handleLogout = () => {
-         Cookies.remove("token");
-         setIsLoggedIn(false);
-         navigate("/login");//redireccionar a la página de login
-   };
+   const getCookie = (name) =>{
+    const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+   }
+
+useEffect(() => {
+    const token = getCookie('token');
+    console.log('token almacenado en la cookie',token);
+  if(token){
+    setIsLoggedIn(true);
+  }
+}, []);
+
+   const handleLogout = async () => {
+        try{
+            axios.defaults.withCredentials = true;
+            await axios.post("http://localhost:3000/auth/logout")
+             document.cookie = `token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT`, //eliminar la cookie
+            setIsLoggedIn(false);
+            window.location.href = "/login";
+    
+
+     } catch(error){
+            console.log('Error al cerrar sesión:',error);
+        }
+    }
+
 
     return (
         <>

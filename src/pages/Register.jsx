@@ -34,7 +34,7 @@ export const Register = () => { //setIsLoggedIn viene de App.jsx
                 setIsLoggedIn(true);
                 const token = response.data.token; //obtener el token del response
                 document.cookie = `token=${token}; path=/`; //almacenar el token en una cookie
-                navigate("/home");
+                window.location.href = "/home";
                });
                
             }catch(error){
