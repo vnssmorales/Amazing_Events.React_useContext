@@ -13,11 +13,13 @@ import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 
 function App() {
+
+
   return (
     <>
      <Router>
-      <Navbar />
-      <Routes>
+     <Navbar />
+         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path="/" element={<Home />} />
@@ -27,7 +29,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/stats" element={<Stats />} />
           <Route path="*" element={<Home/>} />
-       </Routes>
+        </Routes>
        <Footer />
       </Router>
     </>

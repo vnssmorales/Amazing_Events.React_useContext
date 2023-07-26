@@ -16,12 +16,15 @@ const baseUrl = "http://localhost:3000/events";
     useEffect(() => {
         const getEventData = async () => {
             try{
+                if( window.location.href != "http://localhost:5173/login"){
                 axios.defaults.withCredentials = true;
-                const response = await axios.get(baseUrl);
+                const response = await axios.get(baseUrl).catch(() =>{
+                    window.location.href = "/login";
+                });
                 console.log('response',response);
                 const allData = response.data.events;
                 const events = Array.isArray(allData) ? allData : [allData];
-                addEvents(events);
+                addEvents(events);}
             }catch (error) {
                 console.log('Error al obtener los eventos',error);
             }

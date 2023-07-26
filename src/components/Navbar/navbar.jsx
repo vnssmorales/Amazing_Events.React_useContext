@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import AuthContext from '../../contextAuth/AuthContext';
 
-library.add(faCalendarAlt);
+library.add(faCalendarAlt, faSignInAlt, faSignOutAlt);
 export const Navbar = () => {
+   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+   const navigate = useNavigate();
+
+   const handleLogout = () => {
+         Cookies.remove("token");
+         setIsLoggedIn(false);
+         navigate("/login");//redireccionar a la página de login
+   };
+
     return (
         <>
  
@@ -21,7 +31,13 @@ export const Navbar = () => {
                   <Link to={'/pastEvents'} className="nav-link">Past Events</Link>
                   <Link to={'/contact'} className="nav-link">Contact</Link>
                   <Link to={'/stats'} className="nav-link">Stats</Link>
-                  <Link to={'/logout'} className="nav-link">Logout</Link>
+                  {isLoggedIn ? (
+                    <Link to={'/'} className="nav-link" onClick={handleLogout}>
+                        <FontAwesomeIcon icon={faSignOutAlt}/> Logout</Link>
+                        ) : (
+                            <Link to={'/login'} className="nav-link">
+                                <FontAwesomeIcon icon={faSignInAlt}/> Login</Link>
+                                )}
                 </div>
             </div>
             </div>

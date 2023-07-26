@@ -1,11 +1,13 @@
-import React, { useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import  AuthContext  from "../contextAuth/AuthContext";
 
 export const Login = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
-    const navigate = useNavigate();
+    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,11 +18,28 @@ export const Login = () => {
             contraseña: passwordRef.current.value,
         }, {headers: {'Access-Control-Allow-Origin':'*', 'Content-Type': 'application/json'}}).then((response) => {
          // console.log(response.data);
-         navigate("/home");
+
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Bienvenido, te has logueado correctamente',
+            showConfirmButton: false,
+            timer: 1500
+          })
+
+          setIsLoggedIn(true);
+         window.location.href = "/home";
         });
         
     }catch(error){
         console.log('Error al iniciar sesión:',error);
+
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Credenciales incorrectas',
+          text: 'El email o la contraseña ingresados no son válidos',
+        })
     }
     };
 
@@ -35,14 +54,6 @@ export const Login = () => {
             </div>
             <form onSubmit={handleSubmit} action="" method="POST">
               <div className="modal-body">
-              <input
-                style={{marginBottom: '20px', width: '100%'}}
-                type="text"
-                name="name"
-                id="name"
-                placeholder="Nombre"
-                required
-              />
             
               <input
               style={{marginBottom: '20px', width: '100%'}}
