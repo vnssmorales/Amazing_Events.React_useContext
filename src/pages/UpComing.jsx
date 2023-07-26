@@ -4,7 +4,7 @@ import { Header } from "../components/Header/header";
 import  Card  from "../components/Card/card";
 
 export const Upcoming = () => {
-    const {eventos,} = useContext(EventContext);
+    const {eventos} = useContext(EventContext);
     
     return (
         <>

@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import EventContext from "./EventContext";
 import axios from "axios";
 
-const baseUrl = "https://mindhub-xj03.onrender.com/api/amazing";
+const baseUrl = "http://localhost:3000/events";
+//const baseUrl = "https://mindhub-xj03.onrender.com/api/amazing";
 
  const EventProvider = ({ children }) => {
     const [eventos, setEventos] = useState([]);
@@ -15,7 +16,9 @@ const baseUrl = "https://mindhub-xj03.onrender.com/api/amazing";
     useEffect(() => {
         const getEventData = async () => {
             try{
+                axios.defaults.withCredentials = true;
                 const response = await axios.get(baseUrl);
+                console.log('response',response);
                 const allData = response.data.events;
                 const events = Array.isArray(allData) ? allData : [allData];
                 addEvents(events);

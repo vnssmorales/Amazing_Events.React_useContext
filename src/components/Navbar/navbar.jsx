@@ -21,6 +21,7 @@ export const Navbar = () => {
                   <Link to={'/pastEvents'} className="nav-link">Past Events</Link>
                   <Link to={'/contact'} className="nav-link">Contact</Link>
                   <Link to={'/stats'} className="nav-link">Stats</Link>
+                  <Link to={'/logout'} className="nav-link">Logout</Link>
                 </div>
             </div>
             </div>

@@ -24,10 +24,10 @@ import { Filtros } from "../Filtros/filtros";
     const lowerCaseSearchValue = searchValue.toLowerCase();
     const categoryMatch = 
       selectedCategories.length === 0 || 
-      selectedCategories.includes(item.category);
+      selectedCategories.includes(item?.category);
     const searchMatch = 
-       item.name.toLowerCase().includes(lowerCaseSearchValue) ||
-       item.description.toLowerCase().includes(lowerCaseSearchValue);
+       item?.name?.toLowerCase().includes(lowerCaseSearchValue) ||
+       item?.description?.toLowerCase().includes(lowerCaseSearchValue);
 
        if (currenRoute === "upcoming") {
         return categoryMatch && searchMatch && item.estimate;

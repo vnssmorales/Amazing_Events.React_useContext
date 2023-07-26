@@ -15,7 +15,7 @@ import { useParams } from "react-router-dom";
     return (
         <>
         <Header title={"Detalles"} />
-        <DetailsCard eventos={eventos} eventId={parseInt(id)} /> {/*parseInt asegura que ambos valores (el ID del evento y el ID proporcionado) sean del mismo tipo */}
+        <DetailsCard eventos={eventos} eventId={id} /> 
 
         </>
     );
