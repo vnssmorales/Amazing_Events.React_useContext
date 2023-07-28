@@ -9,6 +9,7 @@ import axios from 'axios';
 library.add(faCalendarAlt, faSignInAlt, faSignOutAlt);
 export const Navbar = () => {
    const [ isLoggedIn, setIsLoggedIn] = useState(false);
+   const [userData, setUserData] = useState(null)
 
    const getCookie = (name) =>{
     const value = `; ${document.cookie}`;
@@ -21,8 +22,12 @@ useEffect(() => {
     console.log('token almacenado en la cookie',token);
   if(token){
     setIsLoggedIn(true);
+    fetchUserData();
+  }else{
+    setIsLoggedIn(false);
+    setUserData(null);
   }
-}, []);
+}, [isLoggedIn]);
 
    const handleLogout = async () => {
         try{
@@ -31,12 +36,22 @@ useEffect(() => {
              document.cookie = `token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT`, //eliminar la cookie
             setIsLoggedIn(false);
             window.location.href = "/login";
-    
-
      } catch(error){
             console.log('Error al cerrar sesión:',error);
         }
     }
+
+    // Función para obtener los datos del usuario logeado
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/customer/current', {
+        withCredentials: true,
+      });
+      setUserData(response.data.user); // Almacenar los datos del usuario en el estado
+    } catch (error) {
+      console.error('Error al obtener los datos del usuario logeado:', error);
+    }
+  };
 
 
     return (
@@ -44,8 +59,11 @@ useEffect(() => {
  
         <nav className="navbar navbar-expand-lg">
             <div className="container-fluid">
+            
             <Link to={'/'} className="navbar-brand" aria-current="page"><FontAwesomeIcon icon={faCalendarAlt} /></Link>
-           
+           {isLoggedIn && userData &&(
+            <p className='ms3'>User:{userData.email} </p>
+           )}
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div className="navbar-nav">
                   <Link to={'/'}  className="nav-link active" aria-current="page">Home </Link>
@@ -54,15 +72,18 @@ useEffect(() => {
                   <Link to={'/contact'} className="nav-link">Contact</Link>
                   <Link to={'/stats'} className="nav-link">Stats</Link>
                   {isLoggedIn ? (
-                    <Link to={'/'} className="nav-link" onClick={handleLogout}>
-                        <FontAwesomeIcon icon={faSignOutAlt}/> Logout</Link>
-                        ) : (
-                            <Link to={'/login'} className="nav-link">
-                                <FontAwesomeIcon icon={faSignInAlt}/> Login</Link>
+           <Link to={'/'} className="nav-link" onClick={handleLogout}>
+             <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+           </Link>
+                    ) : (
+                     <Link to={'/login'} className="nav-link">
+                     <FontAwesomeIcon icon={faSignInAlt}/> Login</Link>
+
                                 )}
                 </div>
             </div>
             </div>
+           
         </nav>
         </>
     )

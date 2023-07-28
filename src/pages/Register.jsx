@@ -1,13 +1,11 @@
 import React, { useContext, useRef } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import AuthContext from "../contextAuth/AuthContext";
 export const Register = () => { //setIsLoggedIn viene de App.jsx
     const nameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
-    const navigate = useNavigate();
     const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
