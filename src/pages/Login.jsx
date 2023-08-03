@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useRef } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -7,7 +7,7 @@ import  AuthContext  from "../contextAuth/AuthContext";
 export const Login = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
-    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+    const { setIsLoggedIn } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

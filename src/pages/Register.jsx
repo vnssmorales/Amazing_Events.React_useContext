@@ -6,7 +6,7 @@ export const Register = () => { //setIsLoggedIn viene de App.jsx
     const nameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
-    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+    const { setIsLoggedIn } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
